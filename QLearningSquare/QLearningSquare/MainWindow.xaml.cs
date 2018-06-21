@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 
 namespace QLearningSquare
 {
+
     /// <summary>
     /// Interação lógica para MainWindow.xam
     /// </summary>
