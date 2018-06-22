@@ -6,21 +6,27 @@ using System.Threading.Tasks;
 
 namespace QLearningSquare.GUI
 {
-    public enum SquareDirections
-    {
-        left,
-        right,
-        up,
-        down
-    }
 
-    class GUIControl
+    class GUIControl : IGUIController
     {
         AppMediator.Mediator ctrl = AppMediator.Mediator.pMediator;
 
+        Action onGUILoaded = null;
+        public Action OnGuiLoaded { get => onGUILoaded; set => onGUILoaded = value; }
+
         public void MoveSquare(SquareDirections dir)
         {
+            throw new NotImplementedException();
+        }
 
+        public void onError(string errorMessage)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void onMainWindowLoaded()
+        {
+            onGUILoaded();
         }
     }
 }

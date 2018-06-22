@@ -12,17 +12,10 @@ namespace QLearningSquare.DAO
     {
         JSON parameters = new JSON();
 
-        public bool loadParameters(string url)
+        public void loadParameters(string url)
         {
-            try
-            {
-                string jsonString = File.ReadAllText(url);
-                parameters.fromJson(jsonString);
-                return true;
-            }
-            catch { }
-
-            return false;
+            string jsonString = File.ReadAllText(url);
+            parameters.fromJson(jsonString);
         }
 
         public List<List<int>> getStateRewards()

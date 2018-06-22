@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:QLearningSquare"
         mc:Ignorable="d"
-        Title="QLearningSquare">
+        Title="QLearningSquare" Loaded="Window_Loaded">
 
     <DockPanel LastChildFill="True">
         <StatusBar DockPanel.Dock="Bottom">

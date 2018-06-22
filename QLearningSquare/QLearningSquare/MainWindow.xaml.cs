@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using QLearningSquare.GUI;
 
 namespace QLearningSquare
 {
@@ -21,9 +22,16 @@ namespace QLearningSquare
     /// </summary>
     public partial class MainWindow : Window
     {
+        GUIControl ctrl = (GUIControl)AppMediator.Mediator.pMediator.pGUI;
+
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            ctrl.onMainWindowLoaded();
         }
     }
 }
