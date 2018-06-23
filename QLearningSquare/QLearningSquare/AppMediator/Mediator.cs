@@ -29,30 +29,36 @@ namespace QLearningSquare.AppMediator
                 try
                 {
                     pDAO.loadParameters(@"Parameters.json");
-                    parametersLoaded = true;
-                }
-                catch(Exception e)
-                {
-                    LogHelper.cat("Mediator", "Exception opening parameters file: " + e.Message);
-                    pGUI.onError("Falha na inicialização dos parâmetros");
-                }
 
-                if (parametersLoaded)
-                {
-                    //load the state Rewards
+                    //load the state Rewards and names
                     List<List<int>> rewards = pDAO.getStateRewards();
+                    List<List<string>> stateNames = new List<List<string>>();
+
                     int n = 0;
                     for (int i = 0; i < rewards.Count; i++)
                     {
+                        List<string> row = new List<string>();
+                        stateNames.Add(row);
+
                         for (int j = 0; j < rewards[i].Count; j++)
                         {
                             QLearningState s = new QLearningState();
                             s.Name = "S" + (++n);
                             s.StateReward = rewards[i][j];
                             QLCtrl.AddState(s);
+
+                            row.Add(s.Name);
                         }
                         n++;
                     }
+
+                    pGUI.SetStatesMatrix(stateNames);
+                    parametersLoaded = true;
+                }
+                catch(Exception e)
+                {
+                    LogHelper.cat("Mediator", "Exception loading parameters -> " + e.Message);
+                    pGUI.OnError("Falha na inicialização dos parâmetros dos estados");
                 }
 
             };

@@ -27,6 +27,7 @@ namespace QLearningSquare
         public MainWindow()
         {
             InitializeComponent();
+            ctrl.pMainWindow = this;
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)

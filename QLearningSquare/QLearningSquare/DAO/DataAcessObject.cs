@@ -20,13 +20,19 @@ namespace QLearningSquare.DAO
 
         public List<List<int>> getStateRewards()
         {
+            int rows = parameters.getChildsNames("StateRewards").Count;
+            int columns;
             List<List<int>> rewards = new List<List<int>>();
-            for (int i = 0; i < parameters.getChildsNames("StateRewards").Count; i++)
+
+            for (int i = 0; i < rows; i++)
             {
-                rewards[i] = new List<int>();
-                for(int j = 0; j < parameters.getChildsNames("StateRewards."+i).Count; j++)
+                List<int> row = new List<int>();
+                rewards.Add(row);
+
+                columns = parameters.getChildsNames("StateRewards." + i).Count;
+                for (int j = 0; j < columns; j++)
                 {
-                    rewards[i][j] = parameters.getInt("StateRewards." + i + "." + j);
+                    rewards[i].Add(parameters.getInt("StateRewards." + i + "." + j));
                 }
             }
 
