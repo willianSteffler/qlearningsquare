@@ -49,23 +49,26 @@
                                 <RowDefinition/>
                                 <RowDefinition/>
                                 <RowDefinition/>
+                                <RowDefinition/>
                             </Grid.RowDefinitions>
 
                             <TextBlock Style="{StaticResource keyTxt}" Text="Estado atual" Grid.Row="0" Grid.Column="0"></TextBlock>
-                            <TextBlock Style="{StaticResource valueTxt}" Text="1" Grid.Row="0" Grid.Column="1"></TextBlock>
-                            <TextBlock Style="{StaticResource keyTxt}" Text="Pontuação direita" FontWeight="DemiBold" Grid.Row="1" Grid.Column="0"></TextBlock>
-                            <TextBlock Style="{StaticResource valueTxt}" Text="1" Grid.Row="1" Grid.Column="1"></TextBlock>
+                            <TextBlock Style="{StaticResource valueTxt}" Text="{Binding Path = ViewModel.ActualStateInfo.Name}" Grid.Row="0" Grid.Column="1"></TextBlock>
+                            <TextBlock Style="{StaticResource keyTxt}" Text="Pontuação do estado" FontWeight="DemiBold" Grid.Row="1" Grid.Column="0"></TextBlock>
+                            <TextBlock Style="{StaticResource valueTxt}" Text="{Binding Path = ViewModel.ActualStateInfo.StatePoints}" Grid.Row="1" Grid.Column="1"></TextBlock>
                             <TextBlock Style="{StaticResource keyTxt}" Text="Pontuação esquerda" FontWeight="DemiBold" Grid.Row="2" Grid.Column="0"></TextBlock>
-                            <TextBlock Style="{StaticResource valueTxt}" Text="1" Grid.Row="2" Grid.Column="1"></TextBlock>
-                            <TextBlock Style="{StaticResource keyTxt}" Text="Pontuação cima" FontWeight="DemiBold" Grid.Row="3" Grid.Column="0"></TextBlock>
-                            <TextBlock Style="{StaticResource valueTxt}" Text="1" Grid.Row="3" Grid.Column="1"></TextBlock>
-                            <TextBlock Style="{StaticResource keyTxt}" Text="Pontuação baixo" FontWeight="DemiBold" Grid.Row="4" Grid.Column="0"></TextBlock>
-                            <TextBlock Style="{StaticResource valueTxt}" Text="1" Grid.Row="4" Grid.Column="1"></TextBlock>
+                            <TextBlock Style="{StaticResource valueTxt}" Text="{Binding Path = ViewModel.ActualStateInfo.PointsLeft}" Grid.Row="2" Grid.Column="1"></TextBlock>
+                            <TextBlock Style="{StaticResource keyTxt}" Text="Pontuação direita" FontWeight="DemiBold" Grid.Row="3" Grid.Column="0"></TextBlock>
+                            <TextBlock Style="{StaticResource valueTxt}" Text="{Binding Path = ViewModel.ActualStateInfo.PointsRight}" Grid.Row="3" Grid.Column="1"></TextBlock>
+                            <TextBlock Style="{StaticResource keyTxt}" Text="Pontuação cima" FontWeight="DemiBold" Grid.Row="4" Grid.Column="0"></TextBlock>
+                            <TextBlock Style="{StaticResource valueTxt}" Text="{Binding Path = ViewModel.ActualStateInfo.PointsUp}" Grid.Row="4" Grid.Column="1"></TextBlock>
+                            <TextBlock Style="{StaticResource keyTxt}" Text="Pontuação baixo" FontWeight="DemiBold" Grid.Row="5" Grid.Column="0"></TextBlock>
+                            <TextBlock Style="{StaticResource valueTxt}" Text="{Binding Path = ViewModel.ActualStateInfo.PointsDown}" Grid.Row="5" Grid.Column="1"></TextBlock>
                         </Grid>
                         
                         <StackPanel Orientation="Horizontal" Margin="0 10 0 10">
                             <TextBlock Text="Intervalo da animação "></TextBlock>
-                            <TextBox Width="25"></TextBox>
+                            <TextBox Width="25" Text="{Binding Path = ViewModel.AnimateInterval}"></TextBox>
                         </StackPanel>
                         <Grid>
                             <Grid.ColumnDefinitions>
@@ -99,8 +102,15 @@
                         </Grid.RowDefinitions>
 
                         <TextBlock Text="Q-Table" FontWeight="Bold" Margin="2 0 0 2"></TextBlock>
-                        <DataGrid Grid.Row="1">
-
+                        <DataGrid Grid.Row="1" ItemsSource="{Binding Path = ViewModel.Qtable}" AutoGenerateColumns="False">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Estado"  Binding="{Binding Name}"/>
+                                <DataGridTextColumn Header="Pont." Binding="{Binding StatePoints}" />
+                                <DataGridTextColumn Header="Esquerda" Binding="{Binding PointsLeft}" />
+                                <DataGridTextColumn Header="Direita" Binding="{Binding PointsRight}" />
+                                <DataGridTextColumn Header="Cima" Binding="{Binding PointsUp}" />
+                                <DataGridTextColumn Header="Baixo" Binding="{Binding PointsDown}" />
+                            </DataGrid.Columns>
                         </DataGrid>
                     </Grid>
                 </Border>
