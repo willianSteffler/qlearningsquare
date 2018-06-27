@@ -55,7 +55,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="GUI\IGUIController.cs" />
-    <Compile Include="GUI\StateViewModel.cs" />
+    <Compile Include="QLearningAction.cs" />
     <Compile Include="QLearningController.cs" />
     <Compile Include="QLearningState.cs" />
     <Compile Include="Shared\JsonMaker\JSON.cs" />

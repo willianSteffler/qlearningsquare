@@ -8,24 +8,24 @@ namespace QLearningSquare
 {
     public class QLearningController
     {
-        Dictionary<string, QLearningState> states = new Dictionary<string, QLearningState>();
+        public Dictionary<string, QLearningState> States = new Dictionary<string, QLearningState>();
 
         public void AddState(QLearningState state)
         {
-            states.Add(state.Name, state);
+            States.Add(state.Name, state);
         }
 
         public QLearningState GetState(string stateName)
         {
-            if (states.ContainsKey(stateName))
-                return states[stateName];
+            if (States.ContainsKey(stateName))
+                return States[stateName];
             else
                 return null;
         }
 
         public int GetStatesCount()
         {
-            return states.Count;
+            return States.Count;
         }
 
     }

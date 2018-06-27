@@ -56,29 +56,16 @@ namespace QLearningSquare.AppMediator
                             QLearningState s = new QLearningState();
                             s.Name = "S" + (++n);
                             s.StateReward = rewards[i][j];
-                            s.Siblings = new List<string>();
-                            s.Actions = new Dictionary<string, int>();
+                            s.Actions = new Dictionary<string, QLearningAction>();
 
                             if (haveUp)
-                            {
-                                s.Actions["up"] = pDAO.getActionReward(s.Name, "up");
-                                s.Siblings.Add("S" + (n - rewards[i - 1].Count));
-                            }
+                                s.Actions["up"] = new QLearningAction() { Name = "up", Reward = pDAO.getActionReward(s.Name, "up"), StateResult = "S" + (n - rewards[i - 1].Count) };
                             if (haveDown)
-                            {
-                                s.Actions["down"] = pDAO.getActionReward(s.Name, "down");
-                                s.Siblings.Add("S" + (n + rewards[i + 1].Count));
-                            }
+                                s.Actions["down"] = new QLearningAction() { Name = "down", Reward = pDAO.getActionReward(s.Name, "down"), StateResult = "S" + (n + rewards[i + 1].Count) };
                             if (haveLeft)
-                            {
-                                s.Actions["left"] = pDAO.getActionReward(s.Name, "left");
-                                s.Siblings.Add("S" + (n-1));
-                            }
+                                s.Actions["left"] = new QLearningAction() { Name = "left", Reward = pDAO.getActionReward(s.Name, "left"), StateResult = "S" + (n - 1) };
                             if (haveRight)
-                            {
-                                s.Actions["right"] = pDAO.getActionReward(s.Name, "right");
-                                s.Siblings.Add("S" + (n +1));
-                            }
+                                s.Actions["right"] = new QLearningAction() { Name = "right", Reward = pDAO.getActionReward(s.Name, "right"), StateResult = "S" + (n + 1) };
 
                             QLCtrl.AddState(s);
                             row.Add(s.Name);
