@@ -19,7 +19,7 @@ namespace QLearningSquare.GUI
     {
         void OnError(string errorMessage);
         void MoveSquare(string state);
-        void SetStatesMatrix(List<List<string>> statesMatrix);
+        void SetStatesMatrix(List<List<QLearningState>> statesMatrix);
         Action OnGuiLoaded { get; set; }
     }
 }

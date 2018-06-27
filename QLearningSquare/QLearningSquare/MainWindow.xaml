@@ -67,13 +67,13 @@
                         </Grid>
 
                         <StackPanel Orientation="Horizontal" Margin="0 10 0 0">
-                            <CheckBox IsChecked="{Binding Path = ViewModel.AutoAnimate}"></CheckBox>
+                            <CheckBox IsChecked="{Binding Path = AutoAnimate}"></CheckBox>
                             <TextBlock Margin="2 0 0 0" Text="Auto animar"></TextBlock>
                         </StackPanel>
 
                         <StackPanel Orientation="Horizontal" Margin="0 0 0 10">
                             <TextBlock Text="Intervalo da animação "></TextBlock>
-                            <TextBox Width="25" Text="{Binding Path = ViewModel.AnimateInterval}"></TextBox>
+                            <TextBox Width="25" Text="{Binding Path = AnimateInterval}"></TextBox>
                         </StackPanel>
                         <Grid>
                             <Grid.ColumnDefinitions>
@@ -107,14 +107,14 @@
                         </Grid.RowDefinitions>
 
                         <TextBlock Text="Q-Table" FontWeight="Bold" Margin="2 0 0 2"></TextBlock>
-                        <DataGrid Grid.Row="1" ItemsSource="{Binding Path = ViewModel.Qtable}" AutoGenerateColumns="False">
+                        <DataGrid x:Name="QtableView" Grid.Row="1" ItemsSource="{Binding Path=Qtable}" AutoGenerateColumns="False">
                             <DataGrid.Columns>
                                 <DataGridTextColumn Header="Estado"  Binding="{Binding Name}"/>
-                                <DataGridTextColumn Header="Pont." Binding="{Binding StatePoints}" />
-                                <DataGridTextColumn Header="Esquerda" Binding="{Binding PointsLeft}" />
-                                <DataGridTextColumn Header="Direita" Binding="{Binding PointsRight}" />
-                                <DataGridTextColumn Header="Cima" Binding="{Binding PointsUp}" />
-                                <DataGridTextColumn Header="Baixo" Binding="{Binding PointsDown}" />
+                                <DataGridTextColumn Header="Pont." Binding="{Binding StateReward}" />
+                                <DataGridTextColumn Header="Esquerda" Binding="{Binding Actions[left].Reward}" />
+                                <DataGridTextColumn Header="Direita" Binding="{Binding Actions[right].Reward}" />
+                                <DataGridTextColumn Header="Cima" Binding="{Binding Actions[up].Reward}" />
+                                <DataGridTextColumn Header="Baixo" Binding="{Binding Actions[down].Reward}" />
                             </DataGrid.Columns>
                         </DataGrid>
                     </Grid>

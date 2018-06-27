@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace QLearningSquare
 {
+
     public class QLearningState : INotifyPropertyChanged
     {
         private Dictionary<string, QLearningAction> actions;

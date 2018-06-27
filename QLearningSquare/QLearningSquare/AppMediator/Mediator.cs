@@ -32,7 +32,7 @@ namespace QLearningSquare.AppMediator
 
                     //load the state Rewards and names
                     List<List<int>> rewards = pDAO.getStateRewards();
-                    List<List<string>> stateNames = new List<List<string>>();
+                    List<List<QLearningState>> states = new List<List<QLearningState>>();
 
                     bool haveLeft;
                     bool haveRight;
@@ -45,8 +45,8 @@ namespace QLearningSquare.AppMediator
                         haveUp = !(i == 0);
                         haveDown = !(i == rewards.Count -1);
 
-                        List<string> row = new List<string>();
-                        stateNames.Add(row);
+                        List<QLearningState> row = new List<QLearningState>();
+                        states.Add(row);
 
                         for (int j = 0; j < rewards[i].Count; j++)
                         {
@@ -68,12 +68,12 @@ namespace QLearningSquare.AppMediator
                                 s.Actions["right"] = new QLearningAction() { Name = "right", Reward = pDAO.getActionReward(s.Name, "right"), StateResult = "S" + (n + 1) };
 
                             QLCtrl.AddState(s);
-                            row.Add(s.Name);
+                            row.Add(s);
                         }
                         n++;
                     }
 
-                    pGUI.SetStatesMatrix(stateNames);
+                    pGUI.SetStatesMatrix(states);
                     parametersLoaded = true;
                 }
                 catch(Exception e)

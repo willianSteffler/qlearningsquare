@@ -1,3 +1,6 @@
 [22/06/2018 21:36:48]Exception opening parameters file: O índice estava fora do intervalo. Ele deve ser não-negativo e menor que o tamanho da coleção.
                      Nome do parâmetro: index
 [26/06/2018 21:09:49]Exception loading parameters -> Referência de objeto não definida para uma instância de um objeto.
+[27/06/2018 15:14:45]Exception loading parameters -> Referência de objeto não definida para uma instância de um objeto.
+[27/06/2018 16:13:27]Exception loading parameters -> Referência de objeto não definida para uma instância de um objeto.
+[27/06/2018 16:14:06]Exception loading parameters -> Referência de objeto não definida para uma instância de um objeto.

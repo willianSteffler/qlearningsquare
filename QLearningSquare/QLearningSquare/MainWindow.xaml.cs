@@ -20,8 +20,8 @@ namespace QLearningSquare
 {
     public class MainWindowViewModel : INotifyPropertyChanged
     {
-        public QLearningState ActualStateInfo;
-        public ObservableCollection<QLearningState> Qtable;
+        public QLearningState ActualStateInfo { get; set; }
+        public ObservableCollection<QLearningState> Qtable { get; set; }
 
         private int animateInterval;
         private bool autoAnimate;
@@ -63,25 +63,20 @@ namespace QLearningSquare
     /// </summary>
     public partial class MainWindow : Window
     {
-        public MainWindowViewModel ViewModel = new MainWindowViewModel();
+        public MainWindowViewModel ViewModel { get; set; }
         GUIControl ctrl = (GUIControl)AppMediator.Mediator.pMediator.pGUI;
 
         public MainWindow()
         {
             InitializeComponent();
-            ctrl.pMainWindow = this;
+            ViewModel = new MainWindowViewModel();
             this.DataContext = ViewModel;
+            ctrl.pMainWindow = this;
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            ViewModel.ActualStateInfo.PropertyChanged += ActualStateInfo_PropertyChanged;
             ctrl.onMainWindowLoaded();
-        }
-
-        private void ActualStateInfo_PropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            throw new NotImplementedException();
         }
     }
 }
