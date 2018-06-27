@@ -65,8 +65,13 @@
                             <TextBlock Style="{StaticResource keyTxt}" Text="Pontuação baixo" FontWeight="DemiBold" Grid.Row="5" Grid.Column="0"></TextBlock>
                             <TextBlock Style="{StaticResource valueTxt}" Text="{Binding Path = ViewModel.ActualStateInfo.PointsDown}" Grid.Row="5" Grid.Column="1"></TextBlock>
                         </Grid>
-                        
-                        <StackPanel Orientation="Horizontal" Margin="0 10 0 10">
+
+                        <StackPanel Orientation="Horizontal" Margin="0 10 0 0">
+                            <CheckBox IsChecked="{Binding Path = ViewModel.AutoAnimate}"></CheckBox>
+                            <TextBlock Margin="2 0 0 0" Text="Auto animar"></TextBlock>
+                        </StackPanel>
+
+                        <StackPanel Orientation="Horizontal" Margin="0 0 0 10">
                             <TextBlock Text="Intervalo da animação "></TextBlock>
                             <TextBox Width="25" Text="{Binding Path = ViewModel.AnimateInterval}"></TextBox>
                         </StackPanel>
@@ -89,7 +94,7 @@
 
                             <Button Content="Iniciar"></Button>
                             <Button Content="Parar" Grid.Column="1"></Button>
-                            <Button Content="Re-iniciar" Grid.Row="1"></Button>
+                            <Button Content="Avancar" Grid.Row="1"></Button>
                             <Button Content="Resetar" Grid.Row="1" Grid.Column="1"></Button>
                         </Grid>
                     </StackPanel>
@@ -118,8 +123,8 @@
             </Grid>
         </Border>
         <Border Padding="2" DockPanel.Dock="Left">
-            <Grid Background="Black">
-
+            <Grid Background="Black" x:Name="gridStates">
+                
             </Grid>
         </Border>
     </DockPanel>

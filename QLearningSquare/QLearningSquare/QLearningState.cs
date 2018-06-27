@@ -8,7 +8,7 @@ namespace QLearningSquare
 {
     public class QLearningState
     {
-        public List<QLearningState> Siblings;
+        public List<string> Siblings;
         
         //ActionName,Reward
         public Dictionary<string, int> Actions;

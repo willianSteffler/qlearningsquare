@@ -21,6 +21,5 @@ namespace QLearningSquare.GUI
         void MoveSquare(string state);
         void SetStatesMatrix(List<List<string>> statesMatrix);
         Action OnGuiLoaded { get; set; }
-
     }
 }

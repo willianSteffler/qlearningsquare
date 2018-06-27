@@ -75,6 +75,10 @@ namespace QLearningSquare
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            for (int i = 0; i < length; i++)
+            {
+
+            }
             ctrl.onMainWindowLoaded();
         }
     }

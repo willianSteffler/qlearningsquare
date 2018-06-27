@@ -34,19 +34,53 @@ namespace QLearningSquare.AppMediator
                     List<List<int>> rewards = pDAO.getStateRewards();
                     List<List<string>> stateNames = new List<List<string>>();
 
+                    bool haveLeft;
+                    bool haveRight;
+                    bool haveUp;
+                    bool haveDown;
+
                     int n = 0;
                     for (int i = 0; i < rewards.Count; i++)
                     {
+                        haveUp = !(i == 0);
+                        haveDown = !(i == rewards.Count -1);
+
                         List<string> row = new List<string>();
                         stateNames.Add(row);
 
                         for (int j = 0; j < rewards[i].Count; j++)
                         {
+                            haveLeft = !(j == 0);
+                            haveRight = !(j == rewards[i].Count - 1);
+
                             QLearningState s = new QLearningState();
                             s.Name = "S" + (++n);
                             s.StateReward = rewards[i][j];
-                            QLCtrl.AddState(s);
+                            s.Siblings = new List<string>();
+                            s.Actions = new Dictionary<string, int>();
 
+                            if (haveUp)
+                            {
+                                s.Actions["up"] = pDAO.getActionReward(s.Name, "up");
+                                s.Siblings.Add("S" + (n - rewards[i - 1].Count));
+                            }
+                            if (haveDown)
+                            {
+                                s.Actions["down"] = pDAO.getActionReward(s.Name, "down");
+                                s.Siblings.Add("S" + (n + rewards[i + 1].Count));
+                            }
+                            if (haveLeft)
+                            {
+                                s.Actions["left"] = pDAO.getActionReward(s.Name, "left");
+                                s.Siblings.Add("S" + (n-1));
+                            }
+                            if (haveRight)
+                            {
+                                s.Actions["right"] = pDAO.getActionReward(s.Name, "right");
+                                s.Siblings.Add("S" + (n +1));
+                            }
+
+                            QLCtrl.AddState(s);
                             row.Add(s.Name);
                         }
                         n++;

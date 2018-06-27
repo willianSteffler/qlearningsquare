@@ -39,5 +39,9 @@ namespace QLearningSquare.DAO
             return rewards;
         }
 
+        public int getActionReward(string stateName, string action,int defValue = 0)
+        {
+            return defValue;
+        }
     }
 }
