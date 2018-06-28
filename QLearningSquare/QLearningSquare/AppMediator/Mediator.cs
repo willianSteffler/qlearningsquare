@@ -57,7 +57,7 @@ namespace QLearningSquare.AppMediator
                             s.Name = "S" + (++n);
                             s.StateReward = rewards[i][j];
                             s.Actions = new Dictionary<string, QLearningAction>();
-                            s.Type = pDAO.GetStateType(rewards[i][j]);
+                            s.Type = GetStateType(rewards[i][j]);
 
                             if (haveUp)
                                 s.Actions["up"] = new QLearningAction() { Name = "up", Reward = pDAO.getActionReward(s.Name, "up"), StateResult = "S" + (n - rewards[i - 1].Count) };
@@ -73,7 +73,11 @@ namespace QLearningSquare.AppMediator
                         }
                     }
 
+                    string sinitialState = pDAO.getInitialStateName();
+                    QLCtrl.setInitialState(sinitialState);
                     pGUI.SetStatesMatrix(states);
+                    pGUI.setWorkerState(QLCtrl.GetState(sinitialState));
+
                     parametersLoaded = true;
                 }
                 catch(Exception e)
@@ -83,6 +87,18 @@ namespace QLearningSquare.AppMediator
                 }
 
             };
+        }
+
+        public StateType GetStateType(int stateReward)
+        {
+            if (stateReward == -1)
+                return StateType.NormalState;
+            else if (stateReward == -100)
+                return StateType.AvoidState;
+            else if (stateReward == 100)
+                return StateType.GoalState;
+            else
+                return StateType.Invalid;
         }
     }
 }

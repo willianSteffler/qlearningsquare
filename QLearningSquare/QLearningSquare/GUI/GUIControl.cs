@@ -27,11 +27,6 @@ namespace QLearningSquare.GUI
         Action onGUILoaded = null;
         public Action OnGuiLoaded { get => onGUILoaded; set => onGUILoaded = value; }
 
-        public void MoveSquare(string state)
-        {
-            throw new NotImplementedException();
-        }
-
         public void OnError(string errorMessage)
         {
             MessageBox.Show(errorMessage);
@@ -74,6 +69,18 @@ namespace QLearningSquare.GUI
             pMainWindow.QtableView.ItemsSource = pMainWindow.ViewModel.Qtable;
             pMainWindow.ViewModel.GridStatesSize = 70;
 
+        }
+
+        public void setWorkerState(QLearningState workerState)
+        {
+            pMainWindow.ViewModel.WorkerState = workerState;
+            pMainWindow.ViewModel.WorkerState.PropertyChanged += WorkerState_PropertyChanged;
+
+        }
+
+        private void WorkerState_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if(e.PropertyName == "Name")
         }
     }
 }

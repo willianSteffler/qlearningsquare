@@ -20,7 +20,7 @@ namespace QLearningSquare
 {
     public class MainWindowViewModel : INotifyPropertyChanged
     {
-        public QLearningState ActualStateInfo { get; set; }
+        private QLearningState workerState;
         public ObservableCollection<QLearningState> Qtable { get; set; }
 
         private int animateInterval;
@@ -67,6 +67,15 @@ namespace QLearningSquare
                 currentsteps = value;
 
                 RaisePropertyChanged("CurrentSteps");
+            }
+        }
+
+        public QLearningState WorkerState { get => workerState;
+            set
+            {
+                workerState = value;
+
+                RaisePropertyChanged("WorkerState");
             }
         }
 
