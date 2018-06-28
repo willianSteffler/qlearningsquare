@@ -7,6 +7,14 @@ using System.Threading.Tasks;
 
 namespace QLearningSquare
 {
+    public enum StateType
+    {
+        AvoidState,
+        GoalState,
+        InitialState,
+        NormalState,
+        Invalid
+    }
 
     public class QLearningState : INotifyPropertyChanged
     {
@@ -14,6 +22,7 @@ namespace QLearningSquare
 
         private int stateReward;
         private string name;
+        private StateType type;
 
         public int StateReward { get => stateReward;
             set
@@ -40,6 +49,17 @@ namespace QLearningSquare
             {
                 actions = value;
                 RaisePropertyChanged("Actions");
+            }
+        }
+
+        public StateType Type { get => type;
+            set
+            {
+                if (type != value)
+                {
+                    type = value;
+                    RaisePropertyChanged("Type");
+                }
             }
         }
 

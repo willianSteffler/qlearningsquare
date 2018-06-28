@@ -63,8 +63,8 @@ namespace QLearningSquare.GUI
                     statePositions[statesMatrix[i][j].Name] = new GridPosition() { Row = i, Column = j };
 
                     Border b = new Border();
-                    b.BorderBrush = (SolidColorBrush)(new BrushConverter().ConvertFrom("#ffeeeeee"));
-                    b.BorderThickness = new Thickness(0.5);
+                    
+                    b.Style = (Style)pMainWindow.FindResource(statesMatrix[i][j].Type.ToString());
                     pMainWindow.gridStates.Children.Add(b);
                     Grid.SetRow(b, i);
                     Grid.SetColumn(b, j);
@@ -72,6 +72,7 @@ namespace QLearningSquare.GUI
             }
 
             pMainWindow.QtableView.ItemsSource = pMainWindow.ViewModel.Qtable;
+            pMainWindow.ViewModel.GridStatesSize = 70;
 
         }
     }

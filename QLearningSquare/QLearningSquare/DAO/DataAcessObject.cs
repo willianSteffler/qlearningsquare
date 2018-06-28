@@ -39,6 +39,18 @@ namespace QLearningSquare.DAO
             return rewards;
         }
 
+        public StateType GetStateType(int stateReward)
+        {
+            if (stateReward == -1)
+                return StateType.NormalState;
+            else if (stateReward == -100)
+                return StateType.AvoidState;
+            else if (stateReward == 100)
+                return StateType.GoalState;
+            else
+                return StateType.Invalid;
+        }
+
         public int getActionReward(string stateName, string action,int defValue = 0)
         {
             return defValue;

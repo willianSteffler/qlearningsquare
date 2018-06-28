@@ -42,14 +42,14 @@ namespace QLearningSquare.AppMediator
                     int n = 0;
                     for (int i = 0; i < rewards.Count; i++)
                     {
-                        haveUp = !(i == 0);
-                        haveDown = !(i == rewards.Count -1);
 
                         List<QLearningState> row = new List<QLearningState>();
                         states.Add(row);
 
                         for (int j = 0; j < rewards[i].Count; j++)
                         {
+                            haveUp = !(i == 0) && (rewards[i - 1].Count > j);
+                            haveDown = !(i == rewards.Count -1) && (rewards[i+1].Count > j);
                             haveLeft = !(j == 0);
                             haveRight = !(j == rewards[i].Count - 1);
 
@@ -57,6 +57,7 @@ namespace QLearningSquare.AppMediator
                             s.Name = "S" + (++n);
                             s.StateReward = rewards[i][j];
                             s.Actions = new Dictionary<string, QLearningAction>();
+                            s.Type = pDAO.GetStateType(rewards[i][j]);
 
                             if (haveUp)
                                 s.Actions["up"] = new QLearningAction() { Name = "up", Reward = pDAO.getActionReward(s.Name, "up"), StateResult = "S" + (n - rewards[i - 1].Count) };
@@ -70,7 +71,6 @@ namespace QLearningSquare.AppMediator
                             QLCtrl.AddState(s);
                             row.Add(s);
                         }
-                        n++;
                     }
 
                     pGUI.SetStatesMatrix(states);

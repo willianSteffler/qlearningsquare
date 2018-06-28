@@ -5,14 +5,33 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:QLearningSquare"
         mc:Ignorable="d"
-        Title="QLearningSquare" Loaded="Window_Loaded">
+        Title="QLearningSquare" Loaded="Window_Loaded"
+        >
 
-    <DockPanel LastChildFill="True">
-        <StatusBar DockPanel.Dock="Bottom">
-            <StatusBarItem>
-                <TextBlock Text="bagarai" />
-            </StatusBarItem>
-        </StatusBar>
+    <Window.Resources>
+        <Style x:Key="AvoidState" TargetType="{x:Type Border}">
+            <Setter Property="Background" Value="#ffff0000"/>
+            <Setter Property="BorderBrush" Value="#ffeeeeee"/>
+            <Setter Property="BorderThickness" Value="0.5"/>
+        </Style>
+        <Style x:Key="GoalState" TargetType="{x:Type Border}">
+            <Setter Property="Background" Value="#ff00FF00"/>
+            <Setter Property="BorderBrush" Value="#ffeeeeee"/>
+            <Setter Property="BorderThickness" Value="0.5"/>
+        </Style>
+        <Style x:Key="InitialState" TargetType="{x:Type Border}">
+            <Setter Property="Background" Value="#ff0000ff"/>
+            <Setter Property="BorderBrush" Value="#ffeeeeee"/>
+            <Setter Property="BorderThickness" Value="0.5"/>
+        </Style>
+        <Style x:Key="NormalState" TargetType="{x:Type Border}">
+            <Setter Property="Background" Value="#ff0ff0fa"/>
+            <Setter Property="BorderBrush" Value="#ffaaaaaa"/>
+            <Setter Property="BorderThickness" Value="0.5"/>
+        </Style>
+    </Window.Resources>
+
+    <DockPanel LastChildFill="True" SizeChanged="gridStates_SizeChanged">
         <Border Width="300" Padding="5" DockPanel.Dock="Right" Background="#FFCCCCCC">
             <Grid>
                 <Grid.RowDefinitions>
@@ -54,26 +73,26 @@
 
                             <TextBlock Style="{StaticResource keyTxt}" Text="Estado atual" Grid.Row="0" Grid.Column="0"></TextBlock>
                             <TextBlock Style="{StaticResource valueTxt}" Text="{Binding Path = ViewModel.ActualStateInfo.Name}" Grid.Row="0" Grid.Column="1"></TextBlock>
-                            <TextBlock Style="{StaticResource keyTxt}" Text="Pontuação do estado" FontWeight="DemiBold" Grid.Row="1" Grid.Column="0"></TextBlock>
-                            <TextBlock Style="{StaticResource valueTxt}" Text="{Binding Path = ViewModel.ActualStateInfo.StatePoints}" Grid.Row="1" Grid.Column="1"></TextBlock>
-                            <TextBlock Style="{StaticResource keyTxt}" Text="Pontuação esquerda" FontWeight="DemiBold" Grid.Row="2" Grid.Column="0"></TextBlock>
-                            <TextBlock Style="{StaticResource valueTxt}" Text="{Binding Path = ViewModel.ActualStateInfo.PointsLeft}" Grid.Row="2" Grid.Column="1"></TextBlock>
-                            <TextBlock Style="{StaticResource keyTxt}" Text="Pontuação direita" FontWeight="DemiBold" Grid.Row="3" Grid.Column="0"></TextBlock>
-                            <TextBlock Style="{StaticResource valueTxt}" Text="{Binding Path = ViewModel.ActualStateInfo.PointsRight}" Grid.Row="3" Grid.Column="1"></TextBlock>
-                            <TextBlock Style="{StaticResource keyTxt}" Text="Pontuação cima" FontWeight="DemiBold" Grid.Row="4" Grid.Column="0"></TextBlock>
-                            <TextBlock Style="{StaticResource valueTxt}" Text="{Binding Path = ViewModel.ActualStateInfo.PointsUp}" Grid.Row="4" Grid.Column="1"></TextBlock>
-                            <TextBlock Style="{StaticResource keyTxt}" Text="Pontuação baixo" FontWeight="DemiBold" Grid.Row="5" Grid.Column="0"></TextBlock>
-                            <TextBlock Style="{StaticResource valueTxt}" Text="{Binding Path = ViewModel.ActualStateInfo.PointsDown}" Grid.Row="5" Grid.Column="1"></TextBlock>
+                            <TextBlock Style="{StaticResource keyTxt}" Text="Pontuação esquerda" FontWeight="DemiBold" Grid.Row="1" Grid.Column="0"></TextBlock>
+                            <TextBlock Style="{StaticResource valueTxt}" Text="{Binding Path = ViewModel.ActualStateInfo.PointsLeft}" Grid.Row="1" Grid.Column="1"></TextBlock>
+                            <TextBlock Style="{StaticResource keyTxt}" Text="Pontuação direita" FontWeight="DemiBold" Grid.Row="2" Grid.Column="0"></TextBlock>
+                            <TextBlock Style="{StaticResource valueTxt}" Text="{Binding Path = ViewModel.ActualStateInfo.PointsRight}" Grid.Row="2" Grid.Column="1"></TextBlock>
+                            <TextBlock Style="{StaticResource keyTxt}" Text="Pontuação cima" FontWeight="DemiBold" Grid.Row="3" Grid.Column="0"></TextBlock>
+                            <TextBlock Style="{StaticResource valueTxt}" Text="{Binding Path = ViewModel.ActualStateInfo.PointsUp}" Grid.Row="3" Grid.Column="1"></TextBlock>
+                            <TextBlock Style="{StaticResource keyTxt}" Text="Pontuação baixo" FontWeight="DemiBold" Grid.Row="4" Grid.Column="0"></TextBlock>
+                            <TextBlock Style="{StaticResource valueTxt}" Text="{Binding Path = ViewModel.ActualStateInfo.PointsDown}" Grid.Row="4" Grid.Column="1"></TextBlock>
                         </Grid>
 
                         <StackPanel Orientation="Horizontal" Margin="0 10 0 0">
                             <CheckBox IsChecked="{Binding Path = AutoAnimate}"></CheckBox>
                             <TextBlock Margin="2 0 0 0" Text="Auto animar"></TextBlock>
+                            <TextBlock Margin="80 0 0 0" Text="Passos:" FontWeight="DemiBold"></TextBlock>
+                            <TextBlock Margin="5 0 0 0" Text="{Binding Path = CurrentSteps}"></TextBlock>
                         </StackPanel>
 
                         <StackPanel Orientation="Horizontal" Margin="0 0 0 10">
                             <TextBlock Text="Intervalo da animação "></TextBlock>
-                            <TextBox Width="25" Text="{Binding Path = AnimateInterval}"></TextBox>
+                            <TextBox Width="30" Text="{Binding Path = AnimateInterval}"></TextBox>
                         </StackPanel>
                         <Grid>
                             <Grid.ColumnDefinitions>
@@ -94,7 +113,7 @@
 
                             <Button Content="Iniciar"></Button>
                             <Button Content="Parar" Grid.Column="1"></Button>
-                            <Button Content="Avancar" Grid.Row="1"></Button>
+                            <Button Content="Avancar" IsEnabled="{Binding Path = AutoAnimate}" Grid.Row="1"></Button>
                             <Button Content="Resetar" Grid.Row="1" Grid.Column="1"></Button>
                         </Grid>
                     </StackPanel>
@@ -122,9 +141,16 @@
 
             </Grid>
         </Border>
-        <Border Padding="2" DockPanel.Dock="Left">
-            <Grid Background="Black" x:Name="gridStates">
-                
+        <Border Background="Black" Padding="2" DockPanel.Dock="Left">
+            <Grid Background="Black" x:Name="gridStates" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Grid.Resources>
+                    <Style TargetType="ColumnDefinition">
+                        <Setter Property="Width" Value="{Binding GridStatesSize,Mode=OneWay}"></Setter>
+                    </Style>
+                    <Style TargetType="RowDefinition">
+                        <Setter Property="Height" Value="{Binding GridStatesSize,Mode=OneWay}"></Setter>
+                    </Style>
+                </Grid.Resources>
             </Grid>
         </Border>
     </DockPanel>

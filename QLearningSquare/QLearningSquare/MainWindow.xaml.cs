@@ -25,8 +25,10 @@ namespace QLearningSquare
 
         private int animateInterval;
         private bool autoAnimate;
+        private double gridStatesSize;
+        private int currentsteps;
 
-        
+
         public int AnimateInterval { get => animateInterval;
             set
             {
@@ -45,6 +47,26 @@ namespace QLearningSquare
                     autoAnimate = value;
                     RaisePropertyChanged("AutoAnimate");
                 }
+            }
+        }
+
+        public double GridStatesSize { get => gridStatesSize;
+            set
+            {
+                gridStatesSize = value;
+                
+                RaisePropertyChanged("GridStatesSize");
+            }
+        }
+
+        public int CurrentSteps
+        {
+            get => currentsteps;
+            set
+            {
+                currentsteps = value;
+
+                RaisePropertyChanged("CurrentSteps");
             }
         }
 
@@ -77,6 +99,15 @@ namespace QLearningSquare
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             ctrl.onMainWindowLoaded();
+        }
+
+        private void gridStates_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            double maxValue = e.NewSize.Height < (e.NewSize.Width - 300) ? e.NewSize.Height : (e.NewSize.Width - 300);
+
+            ViewModel.GridStatesSize = gridStates.ColumnDefinitions.Count > gridStates.RowDefinitions.Count ?
+                maxValue / gridStates.ColumnDefinitions.Count : maxValue / gridStates.RowDefinitions.Count;
+            
         }
     }
 }
