@@ -19,6 +19,12 @@
             <Setter Property="BorderBrush" Value="#ffeeeeee"/>
             <Setter Property="BorderThickness" Value="0.5"/>
         </Style>
+        <Style x:Key="WorkerStyle" TargetType="{x:Type Border}">
+            <Setter Property="Background" Value="#ffacFF00"/>
+            <Setter Property="BorderBrush" Value="#ff000000"/>
+            <Setter Property="BorderThickness" Value="0.5"/>
+            <Setter Property="Margin" Value="{Binding Path=WorkerSpacing}"/>
+        </Style>
         <Style x:Key="InitialState" TargetType="{x:Type Border}">
             <Setter Property="Background" Value="#ff0000ff"/>
             <Setter Property="BorderBrush" Value="#ffeeeeee"/>
@@ -72,15 +78,15 @@
                             </Grid.RowDefinitions>
 
                             <TextBlock Style="{StaticResource keyTxt}" Text="Estado atual" Grid.Row="0" Grid.Column="0"></TextBlock>
-                            <TextBlock Style="{StaticResource valueTxt}" Text="{Binding Path = ViewModel.ActualStateInfo.Name}" Grid.Row="0" Grid.Column="1"></TextBlock>
+                            <TextBlock Style="{StaticResource valueTxt}" Text="{Binding Path = WorkerState.Name}" Grid.Row="0" Grid.Column="1"></TextBlock>
                             <TextBlock Style="{StaticResource keyTxt}" Text="Pontuação esquerda" FontWeight="DemiBold" Grid.Row="1" Grid.Column="0"></TextBlock>
-                            <TextBlock Style="{StaticResource valueTxt}" Text="{Binding Path = ViewModel.ActualStateInfo.PointsLeft}" Grid.Row="1" Grid.Column="1"></TextBlock>
+                            <TextBlock Style="{StaticResource valueTxt}" Text="{Binding Path = WorkerState.Actions[left].Reward}" Grid.Row="1" Grid.Column="1"></TextBlock>
                             <TextBlock Style="{StaticResource keyTxt}" Text="Pontuação direita" FontWeight="DemiBold" Grid.Row="2" Grid.Column="0"></TextBlock>
-                            <TextBlock Style="{StaticResource valueTxt}" Text="{Binding Path = ViewModel.ActualStateInfo.PointsRight}" Grid.Row="2" Grid.Column="1"></TextBlock>
+                            <TextBlock Style="{StaticResource valueTxt}" Text="{Binding Path = WorkerState.Actions[right].Reward}" Grid.Row="2" Grid.Column="1"></TextBlock>
                             <TextBlock Style="{StaticResource keyTxt}" Text="Pontuação cima" FontWeight="DemiBold" Grid.Row="3" Grid.Column="0"></TextBlock>
-                            <TextBlock Style="{StaticResource valueTxt}" Text="{Binding Path = ViewModel.ActualStateInfo.PointsUp}" Grid.Row="3" Grid.Column="1"></TextBlock>
+                            <TextBlock Style="{StaticResource valueTxt}" Text="{Binding Path = WorkerState.Actions[up].Reward}" Grid.Row="3" Grid.Column="1"></TextBlock>
                             <TextBlock Style="{StaticResource keyTxt}" Text="Pontuação baixo" FontWeight="DemiBold" Grid.Row="4" Grid.Column="0"></TextBlock>
-                            <TextBlock Style="{StaticResource valueTxt}" Text="{Binding Path = ViewModel.ActualStateInfo.PointsDown}" Grid.Row="4" Grid.Column="1"></TextBlock>
+                            <TextBlock Style="{StaticResource valueTxt}" Text="{Binding Path = WorkerState.Actions[down].Reward}" Grid.Row="4" Grid.Column="1"></TextBlock>
                         </Grid>
 
                         <StackPanel Orientation="Horizontal" Margin="0 10 0 0">
@@ -151,6 +157,9 @@
                         <Setter Property="Height" Value="{Binding GridStatesSize,Mode=OneWay}"></Setter>
                     </Style>
                 </Grid.Resources>
+                <Grid x:Name="Worker" Visibility="Hidden" Grid.Row="{Binding Path=WorkerRow}" Grid.Column="{Binding Path=WorkerColumn}">
+                    <Border Style="{StaticResource WorkerStyle}"></Border>
+                </Grid>
             </Grid>
         </Border>
     </DockPanel>

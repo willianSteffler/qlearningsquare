@@ -9,6 +9,7 @@ namespace QLearningSquare
     public class QLearningController
     {
         public Dictionary<string, QLearningState> States = new Dictionary<string, QLearningState>();
+        QLearningState workerState;
 
         public void AddState(QLearningState state)
         {
@@ -28,5 +29,9 @@ namespace QLearningSquare
             return States.Count;
         }
 
+        internal void setInitialState(string v)
+        {
+            workerState = GetState(v);
+        }
     }
 }

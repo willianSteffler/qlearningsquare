@@ -11,7 +11,6 @@ namespace QLearningSquare
     {
         AvoidState,
         GoalState,
-        InitialState,
         NormalState,
         Invalid
     }

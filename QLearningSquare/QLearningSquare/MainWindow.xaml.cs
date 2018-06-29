@@ -20,13 +20,17 @@ namespace QLearningSquare
 {
     public class MainWindowViewModel : INotifyPropertyChanged
     {
-        public QLearningState ActualStateInfo { get; set; }
+        private QLearningState workerState;
         public ObservableCollection<QLearningState> Qtable { get; set; }
 
         private int animateInterval;
         private bool autoAnimate;
         private double gridStatesSize;
         private int currentsteps;
+
+        private int workerRow;
+        private int workerColumn;
+        private double workerSpacing;
 
 
         public int AnimateInterval { get => animateInterval;
@@ -54,7 +58,7 @@ namespace QLearningSquare
             set
             {
                 gridStatesSize = value;
-                
+                WorkerSpacing = gridStatesSize * 0.2;
                 RaisePropertyChanged("GridStatesSize");
             }
         }
@@ -67,6 +71,45 @@ namespace QLearningSquare
                 currentsteps = value;
 
                 RaisePropertyChanged("CurrentSteps");
+            }
+        }
+
+        public QLearningState WorkerState { get => workerState;
+            set
+            {
+                workerState = value;
+
+                RaisePropertyChanged("WorkerState");
+            }
+        }
+
+        public int WorkerRow { get => workerRow;
+            set
+            {
+                if (workerRow != value)
+                {
+                    workerRow = value;
+                    RaisePropertyChanged("WorkerRow");
+                }
+            }
+        }
+        public int WorkerColumn { get => workerColumn;
+            set
+            {
+                if (workerColumn != value)
+                {
+                    workerColumn = value;
+                    RaisePropertyChanged("WorkerColumn");
+                }
+            }
+        }
+
+        public double WorkerSpacing { get => workerSpacing;
+            set
+            {
+                workerSpacing = value;
+
+                RaisePropertyChanged("WorkerSpacing");
             }
         }
 

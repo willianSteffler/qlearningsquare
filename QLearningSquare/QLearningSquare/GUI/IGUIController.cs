@@ -18,7 +18,7 @@ namespace QLearningSquare.GUI
     interface IGUIController
     {
         void OnError(string errorMessage);
-        void MoveSquare(string state);
+        void setWorkerState(QLearningState workerState);
         void SetStatesMatrix(List<List<QLearningState>> statesMatrix);
         Action OnGuiLoaded { get; set; }
     }

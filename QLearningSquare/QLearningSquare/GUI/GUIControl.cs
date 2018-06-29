@@ -17,6 +17,8 @@ namespace QLearningSquare.GUI
         {
             public int Row;
             public int Column;
+
+            public Border BorderElement { get; internal set; }
         }
 
         Dictionary<string, GridPosition> statePositions = new Dictionary<string,GridPosition>();
@@ -26,11 +28,6 @@ namespace QLearningSquare.GUI
 
         Action onGUILoaded = null;
         public Action OnGuiLoaded { get => onGUILoaded; set => onGUILoaded = value; }
-
-        public void MoveSquare(string state)
-        {
-            throw new NotImplementedException();
-        }
 
         public void OnError(string errorMessage)
         {
@@ -60,20 +57,43 @@ namespace QLearningSquare.GUI
                     }
 
                     pMainWindow.ViewModel.Qtable.Add(statesMatrix[i][j]);
-                    statePositions[statesMatrix[i][j].Name] = new GridPosition() { Row = i, Column = j };
-
                     Border b = new Border();
-                    
+
                     b.Style = (Style)pMainWindow.FindResource(statesMatrix[i][j].Type.ToString());
                     pMainWindow.gridStates.Children.Add(b);
                     Grid.SetRow(b, i);
                     Grid.SetColumn(b, j);
+
+                    statePositions[statesMatrix[i][j].Name] = new GridPosition() { Row = i, Column = j,BorderElement = b };
                 }
             }
 
             pMainWindow.QtableView.ItemsSource = pMainWindow.ViewModel.Qtable;
             pMainWindow.ViewModel.GridStatesSize = 70;
 
+        }
+
+        public void setWorkerState(QLearningState workerState)
+        {
+            pMainWindow.ViewModel.WorkerState = workerState;
+            pMainWindow.ViewModel.WorkerState.PropertyChanged += WorkerState_PropertyChanged;
+            GridPosition gp = statePositions[workerState.Name];
+            pMainWindow.ViewModel.WorkerColumn = gp.Column;
+            pMainWindow.ViewModel.WorkerRow = gp.Row;
+            pMainWindow.Worker.Visibility = Visibility.Visible;
+
+            statePositions[workerState.Name].BorderElement.Style = (Style)pMainWindow.FindResource("InitialState");
+            Grid.SetZIndex(pMainWindow.Worker, 10);
+        }
+
+        private void WorkerState_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if(e.PropertyName == "Name")
+            {
+                GridPosition gp = statePositions[((QLearningState)sender).Name];
+                pMainWindow.ViewModel.WorkerColumn = gp.Column;
+                pMainWindow.ViewModel.WorkerRow = gp.Row;
+            }
         }
     }
 }
