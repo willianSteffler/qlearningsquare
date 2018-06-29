@@ -48,7 +48,7 @@ namespace QLearningSquare.AppMediator
                 //load the state Rewards and names
                 List<List<int>> rewards = pDAO.getStateRewards();
                 List<List<QLearningState>> states = new List<List<QLearningState>>();
-
+                
                 bool haveLeft;
                 bool haveRight;
                 bool haveUp;
@@ -113,5 +113,7 @@ namespace QLearningSquare.AppMediator
             else
                 return StateType.Invalid;
         }
+
+        
     }
 }

@@ -82,7 +82,7 @@ namespace QLearningSquare
                 RaisePropertyChanged("WorkerState");
             }
         }
-
+        
         public int WorkerRow { get => workerRow;
             set
             {
@@ -112,7 +112,7 @@ namespace QLearningSquare
                 RaisePropertyChanged("WorkerSpacing");
             }
         }
-
+        
         public event PropertyChangedEventHandler PropertyChanged;
         private void RaisePropertyChanged(string property)
         {
