@@ -40,7 +40,7 @@ namespace QLearningSquare.AppMediator
             };
         }
 
-        public void Init()
+        private void Init()
         {
             try
             {
@@ -113,7 +113,6 @@ namespace QLearningSquare.AppMediator
             else
                 return StateType.Invalid;
         }
-
         
     }
 }

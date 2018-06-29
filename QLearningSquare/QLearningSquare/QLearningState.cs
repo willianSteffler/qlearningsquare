@@ -19,11 +19,11 @@ namespace QLearningSquare
     {
         private Dictionary<string, QLearningAction> actions;
 
-        private int stateReward;
+        private double stateReward;
         private string name;
         private StateType type;
 
-        public int StateReward { get => stateReward;
+        public double StateReward { get => stateReward;
             set
             {
                 if (stateReward != value)

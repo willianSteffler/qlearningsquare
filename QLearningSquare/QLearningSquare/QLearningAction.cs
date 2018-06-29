@@ -1,14 +1,15 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 
 namespace QLearningSquare
 {
-    public class QLearningAction : INotifyPropertyChanged
+    public class QLearningAction : INotifyPropertyChanged , IComparable<QLearningAction>
     {
         private string name;
         private string stateResult;
-        private int reward;
+        private double reward;
 
-        public int Reward { get => reward;
+        public double Reward { get => reward;
             set
             {
                 if (reward != value)
@@ -41,6 +42,17 @@ namespace QLearningSquare
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
+
+        public int CompareTo(QLearningAction other)
+        {
+            if (reward > other.reward)
+                return 1;
+            else if (reward < other.reward)
+                return -1;
+
+            return 0;
+        }
+
         private void RaisePropertyChanged(string property)
         {
             if (PropertyChanged != null)
