@@ -18,9 +18,78 @@ using QLearningSquare.GUI;
 
 namespace QLearningSquare
 {
+    [ValueConversion(typeof(string), typeof(int))]
+    public class ColumnConverter : IValueConverter
+    {
+        #region IValueConverter Members
+
+        public object Convert(object value, Type targetType, object parameter,
+        System.Globalization.CultureInfo culture)
+        {
+            if (targetType != typeof(int))
+                throw new InvalidOperationException("The target must be a interger");
+
+            return GUIControl.statePositions[(string)value].Column;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter,
+            System.Globalization.CultureInfo culture)
+        {
+            throw new NotSupportedException();
+        }
+
+        #endregion
+    }
+
+    [ValueConversion(typeof(string), typeof(int))]
+    public class RowConverter : IValueConverter
+    {
+        #region IValueConverter Members
+
+        public object Convert(object value, Type targetType, object parameter,
+        System.Globalization.CultureInfo culture)
+        {
+            if (targetType != typeof(int))
+                throw new InvalidOperationException("The target must be a interger");
+
+            return GUIControl.statePositions[(string)value].Row;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter,
+            System.Globalization.CultureInfo culture)
+        {
+            throw new NotSupportedException();
+        }
+
+        #endregion
+    }
+
+    [ValueConversion(typeof(bool), typeof(bool))]
+    public class InverseBooleanConverter : IValueConverter
+    {
+        #region IValueConverter Members
+
+        public object Convert(object value, Type targetType, object parameter,
+            System.Globalization.CultureInfo culture)
+        {
+            if (targetType != typeof(bool))
+                throw new InvalidOperationException("The target must be a boolean");
+
+            return !(bool)value;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter,
+            System.Globalization.CultureInfo culture)
+        {
+            throw new NotSupportedException();
+        }
+
+        #endregion
+    }
+
     public class MainWindowViewModel : INotifyPropertyChanged
     {
-        private QLearningState workerState;
+        private QLearningWorker worker;
         public ObservableCollection<QLearningState> Qtable { get; set; }
 
         private int animateInterval;
@@ -28,8 +97,6 @@ namespace QLearningSquare
         private double gridStatesSize;
         private int currentsteps;
 
-        private int workerRow;
-        private int workerColumn;
         private double workerSpacing;
 
 
@@ -74,35 +141,14 @@ namespace QLearningSquare
             }
         }
 
-        public QLearningState WorkerState { get => workerState;
+        public QLearningWorker Worker { get => worker;
             set
             {
-                workerState = value;
-
-                RaisePropertyChanged("WorkerState");
+                worker = value;
+                RaisePropertyChanged("Worker");
             }
         }
         
-        public int WorkerRow { get => workerRow;
-            set
-            {
-                if (workerRow != value)
-                {
-                    workerRow = value;
-                    RaisePropertyChanged("WorkerRow");
-                }
-            }
-        }
-        public int WorkerColumn { get => workerColumn;
-            set
-            {
-                if (workerColumn != value)
-                {
-                    workerColumn = value;
-                    RaisePropertyChanged("WorkerColumn");
-                }
-            }
-        }
 
         public double WorkerSpacing { get => workerSpacing;
             set
@@ -151,6 +197,26 @@ namespace QLearningSquare
             ViewModel.GridStatesSize = gridStates.ColumnDefinitions.Count > gridStates.RowDefinitions.Count ?
                 maxValue / gridStates.ColumnDefinitions.Count : maxValue / gridStates.RowDefinitions.Count;
             
+        }
+
+        private void btNext_Click(object sender, RoutedEventArgs e)
+        {
+            ctrl.nextClick();
+        }
+
+        private void btStop_Click(object sender, RoutedEventArgs e)
+        {
+            ctrl.stopClick();
+        }
+
+        private void btInit_Click(object sender, RoutedEventArgs e)
+        {
+            ctrl.initClick();
+        }
+
+        private void btReset_Click(object sender, RoutedEventArgs e)
+        {
+            ctrl.resetClick();
         }
     }
 }

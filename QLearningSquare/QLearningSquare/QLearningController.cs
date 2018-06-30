@@ -4,19 +4,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using QLearningSquare.Shared.Extensions;
+using QLearningSquare.AppMediator;
 
 namespace QLearningSquare
 {
     public class QLearningController
     {
         public Dictionary<string, QLearningState> States = new Dictionary<string, QLearningState>();
-        QLearningState workerState;
+        QLearningWorker worker;
 
-        int randomCount;
-        public int TotalCount;
+        double randomCount;
+        double totalCount;
 
         public Action OnGoalReached;
-        public int AleatoryPercentage = 30;
+        public int AleatoryPercentage = 0;
         public double learningFactor = 0.5;
 
         public void AddState(QLearningState state)
@@ -37,37 +38,53 @@ namespace QLearningSquare
             return States.Count;
         }
 
-        internal void setInitialState(string v)
+        internal void SetWorker(QLearningWorker worker)
         {
-            workerState = GetState(v);
+            this.worker = worker;
         }
 
         public void DoWork()
         {
-            QLearningAction actionToTake = Max(workerState);
-            QLearningState nextState = States[actionToTake.StateResult];
-            QLearningAction maxActionNextState = Max(nextState);
+            bool useRnd = totalCount != 0 && ((randomCount / totalCount) * 100) < AleatoryPercentage;
 
-            actionToTake.Reward = workerState.StateReward + (learningFactor * maxActionNextState.Reward);
-            workerState = nextState;
+            QLearningAction takenAction = Max(worker.CurrentState,useRnd);
+            QLearningState nextState = States[takenAction.StateResult];
+            QLearningAction maxActionNextState = Max(nextState,false);
+
+            takenAction.Reward = worker.CurrentState.StateReward + (learningFactor * maxActionNextState.Reward);
+            worker.CurrentState = nextState;
+            worker.Steps++;
+
+            if (worker.CurrentState.Type == StateType.GoalState)
+            {
+                OnGoalReached?.Invoke();
+                worker.Steps = 0;
+                totalCount = 0;
+                randomCount = 0;
+                worker.CurrentState = GetState(Mediator.pMediator.getInitialStateName());
+            }
+
         }
 
-        private QLearningAction Max(QLearningState qState)
+        private QLearningAction Max(QLearningState qState, bool useRandom)
         {
-            bool useRandom = TotalCount > 0 && (Math.Round((double)((randomCount / TotalCount) * 100)) < AleatoryPercentage);
             QLearningAction ret;
-
-            if (useRandom)
-            {
-                ret = Enumerable.ToList(qState.Actions.Values)[RandomExtensions.GetPseudoRandom(0, qState.Actions.Values.Count)];
-                randomCount++;
-            }
+            if (qState.Type == StateType.GoalState)
+                ret = new QLearningAction() { Reward = qState.StateReward };
             else
             {
-                ret = (Enumerable.ToList(qState.Actions.Values).Max());
+                if (useRandom)
+                {
+                    ret = Enumerable.ToList(qState.Actions.Values)[RandomExtensions.GetPseudoRandom(0, qState.Actions.Values.Count)];
+                    randomCount++;
+                }
+                else
+                {
+                    ret = (Enumerable.ToList(qState.Actions.Values).Max());
+                }
             }
 
-            TotalCount++;
+            totalCount++;
             return ret;
         }
     }

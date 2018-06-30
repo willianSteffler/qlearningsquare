@@ -30,3 +30,4 @@ C:\ProjetosGit\Pessoal\BitBucket\qlearningsquare\QLearningSquare\QLearningSquare
 C:\ProjetosGit\Pessoal\BitBucket\qlearningsquare\QLearningSquare\QLearningSquare\obj\Debug\QLearningSquare.pdb
 C:\Projects\BitBucket\qlearningsquare\QLearningSquare\QLearningSquare\bin\Debug\Parameters.json
 C:\ProjetosGit\Pessoal\BitBucket\qlearningsquare\QLearningSquare\QLearningSquare\bin\Debug\Parameters.json
+C:\Projects\BitBucket\qlearningsquare\QLearningSquare\QLearningSquare\obj\Debug\GeneratedInternalTypeHelper.g.cs

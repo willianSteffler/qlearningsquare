@@ -17,10 +17,12 @@ namespace QLearningSquare.AppMediator
         public IGUIController pGUI = new GUIControl();
         public DataAcessObject pDAO = new DataAcessObject();
         QLearningController QLCtrl = new QLearningController();
+        Dictionary<int, StateType> TypeRewards = new Dictionary<int, StateType>();
 
         public static Mediator pMediator { get => mediator; }
 
         bool parametersLoaded = false;
+        SafeTh RunStates=null;
 
         public Mediator()
         {
@@ -48,6 +50,7 @@ namespace QLearningSquare.AppMediator
                 //load the state Rewards and names
                 List<List<int>> rewards = pDAO.getStateRewards();
                 List<List<QLearningState>> states = new List<List<QLearningState>>();
+                TypeRewards = pDAO.getStateRewardsTypes();
                 
                 bool haveLeft;
                 bool haveRight;
@@ -88,10 +91,12 @@ namespace QLearningSquare.AppMediator
                     }
                 }
 
-                string sinitialState = pDAO.getInitialStateName();
-                QLCtrl.setInitialState(sinitialState);
+                QLearningState sinitialState = QLCtrl.GetState( pDAO.getInitialStateName());
+                QLearningWorker worker = new QLearningWorker() { CurrentState = sinitialState };
+                QLCtrl.SetWorker(worker);
+
                 pGUI.SetStatesMatrix(states);
-                pGUI.setWorkerState(QLCtrl.GetState(sinitialState));
+                pGUI.SetWoker(worker);
 
                 parametersLoaded = true;
             }
@@ -102,17 +107,54 @@ namespace QLearningSquare.AppMediator
             }
         }
 
+        internal string getInitialStateName()
+        {
+            return pDAO.getInitialStateName();
+        }
+
+        internal void ResetQL()
+        {
+            StopQL();
+            Init();
+        }
+
+        internal void InitQL()
+        {
+            if(RunStates == null)
+            {
+                RunStates = new SafeTh() { Loop = true };
+                RunStates.OnException = delegate (SafeTh sender, Exception e)
+                {
+                    LogHelper.cat("Mediator", "Exception running QLearningStates -> " + e.Message);
+                    pGUI.OnError("Falha ao executar estados");
+                };
+            }
+
+            if (RunStates.Running)
+                RunStates.Stop();
+
+            RunStates.LoopIntervalms = pGUI.AnimateInterval;
+            RunStates.Start(delegate (SafeTh sender, object[] args)
+            {
+                QLCtrl.DoWork();
+            });
+
+        }
+
+        internal void StopQL()
+        {
+            if (RunStates != null)
+                RunStates.Stop();
+        }
+
         public StateType GetStateType(int stateReward)
         {
-            if (stateReward == -1)
-                return StateType.NormalState;
-            else if (stateReward == -100)
-                return StateType.AvoidState;
-            else if (stateReward == 100)
-                return StateType.GoalState;
-            else
-                return StateType.Invalid;
+            return TypeRewards[stateReward];
         }
-        
+
+        internal void AdvanceQL()
+        {
+            QLCtrl.DoWork();
+        }
     }
 }

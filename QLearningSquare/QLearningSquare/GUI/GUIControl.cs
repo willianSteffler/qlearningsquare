@@ -7,13 +7,14 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using QLearningSquare.AppMediator;
 
 namespace QLearningSquare.GUI
 {
 
     class GUIControl : IGUIController
     {
-        class GridPosition
+        public class GridPosition
         {
             public int Row;
             public int Column;
@@ -21,13 +22,15 @@ namespace QLearningSquare.GUI
             public Border BorderElement { get; internal set; }
         }
 
-        Dictionary<string, GridPosition> statePositions = new Dictionary<string,GridPosition>();
+        public static Dictionary<string, GridPosition> statePositions = new Dictionary<string,GridPosition>();
 
         AppMediator.Mediator ctrl = AppMediator.Mediator.pMediator;
         public MainWindow pMainWindow;
 
         Action onGUILoaded = null;
         public Action OnGuiLoaded { get => onGUILoaded; set => onGUILoaded = value; }
+        public int AnimateInterval { get => pMainWindow.ViewModel.AnimateInterval; set => pMainWindow.ViewModel.AnimateInterval = value; }
+        public bool AutoAnimate { get => pMainWindow.ViewModel.AutoAnimate; set => pMainWindow.ViewModel.AutoAnimate = value; }
 
         public void OnError(string errorMessage)
         {
@@ -73,27 +76,33 @@ namespace QLearningSquare.GUI
 
         }
 
-        public void setWorkerState(QLearningState workerState)
+        public void SetWoker(QLearningWorker worker)
         {
-            pMainWindow.ViewModel.WorkerState = workerState;
-            pMainWindow.ViewModel.WorkerState.PropertyChanged += WorkerState_PropertyChanged;
-            GridPosition gp = statePositions[workerState.Name];
-            pMainWindow.ViewModel.WorkerColumn = gp.Column;
-            pMainWindow.ViewModel.WorkerRow = gp.Row;
+            pMainWindow.ViewModel.Worker = worker;
             pMainWindow.Worker.Visibility = Visibility.Visible;
 
-            statePositions[workerState.Name].BorderElement.Style = (Style)pMainWindow.FindResource("InitialState");
+            statePositions[worker.CurrentState.Name].BorderElement.Style = (Style)pMainWindow.FindResource("InitialState");
             Grid.SetZIndex(pMainWindow.Worker, 10);
         }
 
-        private void WorkerState_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        internal void resetClick()
         {
-            if(e.PropertyName == "Name")
-            {
-                GridPosition gp = statePositions[((QLearningState)sender).Name];
-                pMainWindow.ViewModel.WorkerColumn = gp.Column;
-                pMainWindow.ViewModel.WorkerRow = gp.Row;
-            }
+            Mediator.pMediator.ResetQL();
+        }
+
+        internal void initClick()
+        {
+            Mediator.pMediator.InitQL();
+        }
+
+        internal void stopClick()
+        {
+            Mediator.pMediator.StopQL();
+        }
+
+        internal void nextClick()
+        {
+            Mediator.pMediator.AdvanceQL();
         }
     }
 }

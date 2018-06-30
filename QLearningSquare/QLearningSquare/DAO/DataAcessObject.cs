@@ -48,5 +48,15 @@ namespace QLearningSquare.DAO
         {
             return parameters.getString("InitialState");
         }
+
+        public Dictionary<int, StateType> getStateRewardsTypes()
+        {
+            Dictionary<int,StateType > dic = new Dictionary<int, StateType>();
+            dic[parameters.getInt("AvoidReward")] = StateType.AvoidState;
+            dic[parameters.getInt("GoalReward")] = StateType.GoalState;
+            dic[parameters.getInt("NormalReward")] = StateType.NormalState;
+
+            return dic;
+        }
     }
 }

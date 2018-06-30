@@ -7,5 +7,9 @@
     [ -1, -100, -100, -100, -100, -100, -100, -100, -100, 100 ]
   ],
 
-  "InitialState": "S6"
+  "InitialState": "S41",
+  "AvoidReward": -100,
+  "GoalReward": 100,
+  "NormalReward": -1
+
 }

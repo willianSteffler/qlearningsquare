@@ -58,10 +58,13 @@
     <Compile Include="QLearningAction.cs" />
     <Compile Include="QLearningController.cs" />
     <Compile Include="QLearningState.cs" />
+    <Compile Include="QLearningWorker.cs" />
     <Compile Include="Shared\Extensions\RandomExtensions.cs" />
+    <Compile Include="Shared\IExceptionManager.cs" />
     <Compile Include="Shared\JsonMaker\JSON.cs" />
     <Compile Include="Shared\JsonMaker\JSONObject.cs" />
     <Compile Include="Shared\LogHelper.cs" />
+    <Compile Include="Shared\SafeTh.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

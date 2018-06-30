@@ -6,19 +6,12 @@ using System.Threading.Tasks;
 
 namespace QLearningSquare.GUI
 {
-
-    public enum SquareDirections
-    {
-        left,
-        right,
-        up,
-        down
-    }
-
     interface IGUIController
     {
+        int AnimateInterval { get; set; }
+        bool AutoAnimate { get; set; }
         void OnError(string errorMessage);
-        void setWorkerState(QLearningState workerState);
+        void SetWoker(QLearningWorker worker);
         void SetStatesMatrix(List<List<QLearningState>> statesMatrix);
         Action OnGuiLoaded { get; set; }
     }
