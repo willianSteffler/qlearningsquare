@@ -28,9 +28,12 @@ namespace QLearningSquare.GUI
         public MainWindow pMainWindow;
 
         Action onGUILoaded = null;
+        Action onGUIClose = null;
+
         public Action OnGuiLoaded { get => onGUILoaded; set => onGUILoaded = value; }
         public int AnimateInterval { get => pMainWindow.ViewModel.AnimateInterval; set => pMainWindow.ViewModel.AnimateInterval = value; }
         public bool AutoAnimate { get => pMainWindow.ViewModel.AutoAnimate; set => pMainWindow.ViewModel.AutoAnimate = value; }
+        public Action OnGuiClose { get => onGUIClose; set => onGUIClose = value; }
 
         public void OnError(string errorMessage)
         {
@@ -45,6 +48,7 @@ namespace QLearningSquare.GUI
         public void SetStatesMatrix(List<List<QLearningState>> statesMatrix)
         {
             pMainWindow.ViewModel.Qtable = new ObservableCollection<QLearningState>();
+            statePositions = new Dictionary<string, GridPosition>();
 
             for (int i = 0; i < statesMatrix.Count; i++)
             {
@@ -72,7 +76,11 @@ namespace QLearningSquare.GUI
             }
 
             pMainWindow.QtableView.ItemsSource = pMainWindow.ViewModel.Qtable;
-            pMainWindow.ViewModel.GridStatesSize = 70;
+            Border gb = (Border)pMainWindow.gridStates.Parent;
+            double maxValue = gb.ActualHeight < (gb.ActualWidth) ? gb.ActualHeight : (gb.ActualWidth);
+
+            pMainWindow.ViewModel.GridStatesSize = pMainWindow.gridStates.ColumnDefinitions.Count > pMainWindow.gridStates.RowDefinitions.Count ?
+                maxValue / pMainWindow.gridStates.ColumnDefinitions.Count : maxValue / pMainWindow.gridStates.RowDefinitions.Count;
 
         }
 
@@ -103,6 +111,29 @@ namespace QLearningSquare.GUI
         internal void nextClick()
         {
             Mediator.pMediator.AdvanceQL();
+        }
+
+        internal void openFile(string fileName)
+        {
+            Mediator.pMediator.OpenFile(fileName);
+        }
+
+        public void ResetViews()
+        {
+
+            foreach(var gp in statePositions.Values)
+            {
+                pMainWindow.gridStates.Children.Remove(gp.BorderElement);
+            }
+
+            pMainWindow.gridStates.RowDefinitions.Clear();
+            pMainWindow.gridStates.ColumnDefinitions.Clear();
+            statePositions.Clear();
+        }
+
+        internal void onClose()
+        {
+            OnGuiClose();
         }
     }
 }

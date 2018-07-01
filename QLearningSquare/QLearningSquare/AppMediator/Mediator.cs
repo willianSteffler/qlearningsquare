@@ -16,29 +16,22 @@ namespace QLearningSquare.AppMediator
         //initialize classes
         public IGUIController pGUI = new GUIControl();
         public DataAcessObject pDAO = new DataAcessObject();
-        QLearningController QLCtrl = new QLearningController();
+        QLearningController QLCtrl;
         Dictionary<int, StateType> TypeRewards = new Dictionary<int, StateType>();
 
         public static Mediator pMediator { get => mediator; }
-
-        bool parametersLoaded = false;
         SafeTh RunStates=null;
 
         public Mediator()
         {
             pGUI.OnGuiLoaded = delegate ()
             {
-                try
-                {
-                    pDAO.loadParameters(@"Parameters.json");
-                }
-                catch(Exception e)
-                {
-                    LogHelper.cat("Mediator", "Exception loading parameters -> " + e.Message);
-                    pGUI.OnError("Falha ao abrir arquivo de parametros");
-                }
-
-                Init();
+                if (OpenParameters(@"Parameters.json"));
+                    Init();
+            };
+            pGUI.OnGuiClose = delegate ()
+            {
+                SafeTh.StopAllThreads();
             };
         }
 
@@ -48,6 +41,7 @@ namespace QLearningSquare.AppMediator
             {
 
                 //load the state Rewards and names
+                QLCtrl = new QLearningController();
                 List<List<int>> rewards = pDAO.getStateRewards();
                 List<List<QLearningState>> states = new List<List<QLearningState>>();
                 TypeRewards = pDAO.getStateRewardsTypes();
@@ -97,13 +91,38 @@ namespace QLearningSquare.AppMediator
 
                 pGUI.SetStatesMatrix(states);
                 pGUI.SetWoker(worker);
-
-                parametersLoaded = true;
             }
             catch (Exception e)
             {
                 LogHelper.cat("Mediator", "Exception loading parameters -> " + e.Message);
                 pGUI.OnError("Falha na inicialização dos parâmetros dos estados");
+            }
+        }
+
+        private bool OpenParameters(string filename)
+        {
+            bool parametersLoaded = false;
+
+            try
+            {
+                pDAO.loadParameters(filename);
+                parametersLoaded = true;
+            }
+            catch (Exception e)
+            {
+                LogHelper.cat("Mediator", "Exception loading parameters -> " + e.Message);
+                pGUI.OnError("Falha ao abrir arquivo de parametros");
+            }
+
+            return parametersLoaded;
+        }
+
+        internal void OpenFile(string name)
+        {
+            StopQL();
+            if (OpenParameters(name))
+            {
+                ResetQL();
             }
         }
 
@@ -115,6 +134,8 @@ namespace QLearningSquare.AppMediator
         internal void ResetQL()
         {
             StopQL();
+            QLCtrl.Dispose();
+            pGUI.ResetViews();
             Init();
         }
 

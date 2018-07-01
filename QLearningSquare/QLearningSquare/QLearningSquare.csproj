@@ -59,6 +59,7 @@
     <Compile Include="QLearningController.cs" />
     <Compile Include="QLearningState.cs" />
     <Compile Include="QLearningWorker.cs" />
+    <Compile Include="Shared\Cache.cs" />
     <Compile Include="Shared\Extensions\RandomExtensions.cs" />
     <Compile Include="Shared\IExceptionManager.cs" />
     <Compile Include="Shared\JsonMaker\JSON.cs" />

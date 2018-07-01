@@ -15,6 +15,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using QLearningSquare.GUI;
+using Microsoft.Win32;
 
 namespace QLearningSquare
 {
@@ -192,11 +193,10 @@ namespace QLearningSquare
 
         private void gridStates_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-            double maxValue = e.NewSize.Height < (e.NewSize.Width - 300) ? e.NewSize.Height : (e.NewSize.Width - 300);
+            double maxValue = e.NewSize.Height < (e.NewSize.Width) ? e.NewSize.Height : (e.NewSize.Width);
 
             ViewModel.GridStatesSize = gridStates.ColumnDefinitions.Count > gridStates.RowDefinitions.Count ?
                 maxValue / gridStates.ColumnDefinitions.Count : maxValue / gridStates.RowDefinitions.Count;
-            
         }
 
         private void btNext_Click(object sender, RoutedEventArgs e)
@@ -206,6 +206,9 @@ namespace QLearningSquare
 
         private void btStop_Click(object sender, RoutedEventArgs e)
         {
+            if (sender is CheckBox && ViewModel.AutoAnimate)
+                return;
+
             ctrl.stopClick();
         }
 
@@ -217,6 +220,19 @@ namespace QLearningSquare
         private void btReset_Click(object sender, RoutedEventArgs e)
         {
             ctrl.resetClick();
+        }
+
+        private void btOpen_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            if (openFileDialog.ShowDialog() == true && openFileDialog.FileName != "")
+
+            ctrl.openFile(openFileDialog.FileName);
+        }
+
+        private void Window_Closing(object sender, CancelEventArgs e)
+        {
+            ctrl.onClose();
         }
     }
 }

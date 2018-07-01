@@ -14,6 +14,7 @@ namespace QLearningSquare.DAO
 
         public void loadParameters(string url)
         {
+            parameters = new JSON();
             string jsonString = File.ReadAllText(url);
             parameters.fromJson(jsonString);
         }

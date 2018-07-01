@@ -14,5 +14,7 @@ namespace QLearningSquare.GUI
         void SetWoker(QLearningWorker worker);
         void SetStatesMatrix(List<List<QLearningState>> statesMatrix);
         Action OnGuiLoaded { get; set; }
+        Action OnGuiClose { get; set; }
+        void ResetViews();
     }
 }

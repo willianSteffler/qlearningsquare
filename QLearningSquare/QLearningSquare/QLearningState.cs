@@ -1,4 +1,5 @@
-﻿using System;
+﻿using QLearningSquare.Shared.Extensions;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -22,6 +23,7 @@ namespace QLearningSquare
         private double stateReward;
         private string name;
         private StateType type;
+        public int Hits;
 
         public double StateReward { get => stateReward;
             set
@@ -80,6 +82,25 @@ namespace QLearningSquare
         {
             return Actions.Count;
         }
+
+        public QLearningAction Max(bool useRandom)
+        {
+            QLearningAction ret;
+            if (type == StateType.GoalState)
+                ret = new QLearningAction() { Reward = StateReward };
+            else
+            {
+                ret = useRandom ? Enumerable.ToList(actions.Values)[RandomExtensions.GetPseudoRandom(0, Actions.Values.Count)] :
+                    (Enumerable.ToList(actions.Values).Max());
+            }
+
+            return ret;
+        }
+
+        public bool ActionsAreEqual()
+        {
+            return actions.All(act => act.Value.CompareTo(Max(false)) == 0);
+        } 
 
         public event PropertyChangedEventHandler PropertyChanged;
         private void RaisePropertyChanged(string property)
