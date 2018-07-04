@@ -6,12 +6,19 @@ using System.Text;
 using System.Threading.Tasks;
 using QLearningSquare.DAO;
 using Shared;
+using QLearningSquare.Shared;
 
 namespace QLearningSquare.AppMediator
 {
     class Mediator
     {
         private static Mediator mediator = new Mediator();
+        public static Dictionary<string, string> TranslateStates = new Dictionary<string, string>() {
+                                { "up","Cima"},
+                                { "down","Baixo"},
+                                { "left","Esquerda"},
+                                { "right","Direita"}
+                            };
 
         //initialize classes
         public IGUIController pGUI = new GUIControl();
@@ -72,13 +79,17 @@ namespace QLearningSquare.AppMediator
                         s.Type = GetStateType(rewards[i][j]);
 
                         if (haveUp)
-                            s.Actions["up"] = new QLearningAction() { Name = "up", Reward = pDAO.getActionReward(s.Name, "up"), StateResult = "S" + (n - rewards[i - 1].Count) };
+                            s.Actions["up"] = new QLearningAction() { Name = "up", Reward = pDAO.getActionReward(s.Name, "up"),
+                                StateResult = "S" + (n - rewards[i].Count) };
                         if (haveDown)
-                            s.Actions["down"] = new QLearningAction() { Name = "down", Reward = pDAO.getActionReward(s.Name, "down"), StateResult = "S" + (n + rewards[i + 1].Count) };
+                            s.Actions["down"] = new QLearningAction() { Name = "down", Reward = pDAO.getActionReward(s.Name, "down"),
+                                StateResult = "S" + (n + rewards[i].Count) };
                         if (haveLeft)
-                            s.Actions["left"] = new QLearningAction() { Name = "left", Reward = pDAO.getActionReward(s.Name, "left"), StateResult = "S" + (n - 1) };
+                            s.Actions["left"] = new QLearningAction() { Name = "left", Reward = pDAO.getActionReward(s.Name, "left"),
+                                StateResult = "S" + (n - 1) };
                         if (haveRight)
-                            s.Actions["right"] = new QLearningAction() { Name = "right", Reward = pDAO.getActionReward(s.Name, "right"), StateResult = "S" + (n + 1) };
+                            s.Actions["right"] = new QLearningAction() { Name = "right", Reward = pDAO.getActionReward(s.Name, "right"),
+                                StateResult = "S" + (n + 1) };
 
                         QLCtrl.AddState(s);
                         row.Add(s);
@@ -86,8 +97,21 @@ namespace QLearningSquare.AppMediator
                 }
 
                 QLearningState sinitialState = QLCtrl.GetState( pDAO.getInitialStateName());
-                QLearningWorker worker = new QLearningWorker() { CurrentState = sinitialState };
+                QLearningWorker worker = new QLearningWorker() { CurrentState = sinitialState,IntialState = sinitialState };
                 QLCtrl.SetWorker(worker);
+                QLCtrl.Init();
+
+                QLCtrl.ItsTerminal = delegate (QLearningEpisode e)
+                {
+                    StopQL();
+                    string acts = "";
+                    e.takenActions.ForEach(a => acts += TranslateStates[a.Name] + " -> ");
+                    acts += "Estado final.";
+
+                    pGUI.OnMessage("Provavelmente a melhor solução foi encontrada pelo agente !\r\n" +
+                                    "Ações :" + acts + "\r\n"+
+                                    "Total de Passos : " + e.takenActions.Count());
+                };
 
                 pGUI.SetStatesMatrix(states);
                 pGUI.SetWoker(worker);
@@ -165,7 +189,10 @@ namespace QLearningSquare.AppMediator
         internal void StopQL()
         {
             if (RunStates != null)
-                RunStates.Stop();
+            {
+                RunStates.Dispose();
+                RunStates = null;
+            }
         }
 
         public StateType GetStateType(int stateReward)

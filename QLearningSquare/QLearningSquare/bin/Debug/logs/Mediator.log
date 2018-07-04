@@ -1,31 +1,17 @@
-[22/06/2018 21:36:48]Exception opening parameters file: O índice estava fora do intervalo. Ele deve ser não-negativo e menor que o tamanho da coleção.
-                     Nome do parâmetro: index
-[26/06/2018 21:09:49]Exception loading parameters -> Referência de objeto não definida para uma instância de um objeto.
-[27/06/2018 15:14:45]Exception loading parameters -> Referência de objeto não definida para uma instância de um objeto.
-[27/06/2018 16:13:27]Exception loading parameters -> Referência de objeto não definida para uma instância de um objeto.
-[27/06/2018 16:14:06]Exception loading parameters -> Referência de objeto não definida para uma instância de um objeto.
-[29/06/2018 20:02:11]Exception loading parameters -> Referência de objeto não definida para uma instância de um objeto.
-[29/06/2018 23:46:56]Exception loading parameters -> Já foi adicionado um item com a mesma chave.
-[30/06/2018 00:01:08]Exception running QLearningStates -> Referência de objeto não definida para uma instância de um objeto.
-[30/06/2018 00:23:36]Exception running QLearningStates -> Referência de objeto não definida para uma instância de um objeto.
-[30/06/2018 01:50:23]Exception loading parameters -> Já foi adicionado um item com a mesma chave.
-[30/06/2018 02:04:35]Exception loading parameters -> Já foi adicionado um item com a mesma chave.
-[30/06/2018 04:23:50]Exception loading parameters -> Já foi adicionado um item com a mesma chave.
-[30/06/2018 04:23:59]Exception loading parameters -> Já foi adicionado um item com a mesma chave.
-[30/06/2018 04:24:06]Exception loading parameters -> Já foi adicionado um item com a mesma chave.
-[30/06/2018 12:40:44]Exception loading parameters -> Já foi adicionado um item com a mesma chave.
-[30/06/2018 12:44:27]Exception loading parameters -> A cadeia de caracteres de entrada não estava em um formato correto.
-[30/06/2018 13:21:15]Exception loading parameters -> A chave fornecida não estava presente no dicionário.
-[30/06/2018 13:23:14]Exception loading parameters -> A chave fornecida não estava presente no dicionário.
-[30/06/2018 13:23:30]Exception loading parameters -> A chave fornecida não estava presente no dicionário.
-[30/06/2018 13:23:38]Exception loading parameters -> A chave fornecida não estava presente no dicionário.
-[30/06/2018 13:25:38]Exception loading parameters -> A chave fornecida não estava presente no dicionário.
-[30/06/2018 13:36:33]Exception loading parameters -> Já foi adicionado um item com a mesma chave.
-[30/06/2018 14:59:31]Exception running QLearningStates -> Referência de objeto não definida para uma instância de um objeto.
-[30/06/2018 14:59:42]Exception running QLearningStates -> Referência de objeto não definida para uma instância de um objeto.
-[30/06/2018 14:59:52]Exception running QLearningStates -> Referência de objeto não definida para uma instância de um objeto.
-[30/06/2018 15:00:57]Exception running QLearningStates -> Referência de objeto não definida para uma instância de um objeto.
-[30/06/2018 18:27:01]Exception loading parameters -> Nome de caminho vazio não é válido.
-[30/06/2018 20:58:07]Exception loading parameters -> Nome de caminho vazio não é válido.
-[30/06/2018 20:58:17]Exception loading parameters -> Nome de caminho vazio não é válido.
-[30/06/2018 21:23:28]Exception loading parameters -> A chave fornecida não estava presente no dicionário.
+[03/07/2018 20:10:44]Exception loading parameters -> A cadeia de caracteres de entrada não estava em um formato correto.
+[03/07/2018 20:10:59]Exception loading parameters -> A cadeia de caracteres de entrada não estava em um formato correto.
+[03/07/2018 23:08:49]Exception running QLearningStates -> Valor não pode ser nulo.
+                     Nome do parâmetro: key
+[03/07/2018 23:10:40]Exception running QLearningStates -> Tentativa de divisão por zero.
+[03/07/2018 23:10:54]Exception running QLearningStates -> Valor não pode ser nulo.
+                     Nome do parâmetro: key
+[04/07/2018 00:40:27]Exception running QLearningStates -> Referência de objeto não definida para uma instância de um objeto.
+[04/07/2018 00:40:34]Exception running QLearningStates -> Referência de objeto não definida para uma instância de um objeto.
+[04/07/2018 02:34:12]Exception running QLearningStates -> Valor não pode ser nulo.
+                     Nome do parâmetro: key
+[04/07/2018 02:35:52]Exception running QLearningStates -> Valor não pode ser nulo.
+                     Nome do parâmetro: key
+[04/07/2018 02:37:16]Exception running QLearningStates -> Valor não pode ser nulo.
+                     Nome do parâmetro: key
+[04/07/2018 12:03:50]Exception running QLearningStates -> O índice estava fora dos limites da matriz.
+[04/07/2018 12:03:50]Exception running QLearningStates -> O índice estava fora dos limites da matriz.

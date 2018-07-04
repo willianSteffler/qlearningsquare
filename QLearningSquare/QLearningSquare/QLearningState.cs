@@ -99,7 +99,7 @@ namespace QLearningSquare
 
         public bool ActionsAreEqual()
         {
-            return actions.All(act => act.Value.CompareTo(Max(false)) == 0);
+            return (Enumerable.ToList(actions.Values).FindAll(act => act.CompareTo(Max(false)) == 0)).Count > 1;
         } 
 
         public event PropertyChangedEventHandler PropertyChanged;

@@ -37,7 +37,7 @@ namespace QLearningSquare.GUI
 
         public void OnError(string errorMessage)
         {
-            MessageBox.Show(errorMessage);
+            MessageBox.Show(errorMessage,"Error", MessageBoxButton.OK, MessageBoxImage.Error);
         }
 
         public void onMainWindowLoaded()
@@ -134,6 +134,11 @@ namespace QLearningSquare.GUI
         internal void onClose()
         {
             OnGuiClose();
+        }
+
+        public void OnMessage(string message)
+        {
+            MessageBox.Show(message, "Info", MessageBoxButton.OK, MessageBoxImage.Information);
         }
     }
 }

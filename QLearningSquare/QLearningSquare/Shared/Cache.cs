@@ -27,6 +27,7 @@ namespace QLearningSquare.Shared
             internal TimeSpan Time;
             internal CacheItem Data;
             internal CacheReplacementPolicy replacementPolicy;
+            internal int Hits;
 
             public int CompareTo(CacheItemInfo other)
             {
@@ -78,14 +79,27 @@ namespace QLearningSquare.Shared
 
         public CacheItem Get(string itemKey)
         {
+            CacheItem a = null;
             totalCount++;
             if (values.ContainsKey(itemKey))
             {
                 hitCount++;
-                return values[itemKey].Data;
+                a= values[itemKey].Data;
             }
 
-            return null;
+            hitrate = ((double)hitCount/ (double)totalCount) * 100;
+
+            return a;
+        }
+
+        public double getItemHitRate(string itemKey)
+        {
+            if (values.ContainsKey(itemKey))
+            {
+                return (double)values[itemKey].Hits / (double)totalCount;
+            }
+
+            return 0;
         }
 
         private void substitute( CacheItemInfo newItem)
@@ -96,7 +110,7 @@ namespace QLearningSquare.Shared
             values.Add(newItem.Data.Key, newItem);
         }
 
-        public double Hitrate { get => totalCount > 0 ? hitCount/totalCount : 0;}
+        public double Hitrate { get => hitrate;}
         internal CacheReplacementPolicy ReplacementPolicy1 { get => replacementPolicy; set => replacementPolicy = value; }
     }
 }

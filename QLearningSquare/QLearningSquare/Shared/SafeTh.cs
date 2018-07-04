@@ -101,7 +101,6 @@ namespace Shared
         public void Stop()
         {
             running = false;
-            pthread.Join();
         }
 
         /// <summary>

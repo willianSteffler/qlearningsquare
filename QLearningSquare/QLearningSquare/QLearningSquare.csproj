@@ -57,6 +57,7 @@
     <Compile Include="GUI\IGUIController.cs" />
     <Compile Include="QLearningAction.cs" />
     <Compile Include="QLearningController.cs" />
+    <Compile Include="QLearningEpisode.cs" />
     <Compile Include="QLearningState.cs" />
     <Compile Include="QLearningWorker.cs" />
     <Compile Include="Shared\Cache.cs" />

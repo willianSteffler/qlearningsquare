@@ -11,6 +11,7 @@ namespace QLearningSquare.GUI
         int AnimateInterval { get; set; }
         bool AutoAnimate { get; set; }
         void OnError(string errorMessage);
+        void OnMessage(string message);
         void SetWoker(QLearningWorker worker);
         void SetStatesMatrix(List<List<QLearningState>> statesMatrix);
         Action OnGuiLoaded { get; set; }

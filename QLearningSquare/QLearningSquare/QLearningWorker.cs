@@ -10,7 +10,9 @@ namespace QLearningSquare
     public class QLearningWorker : INotifyPropertyChanged
     {
         int steps;
+        public QLearningState IntialState = null;
         QLearningState currentState = null;
+        
 
         public int Steps { get => steps;
             set
